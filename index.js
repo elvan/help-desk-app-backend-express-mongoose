@@ -12,7 +12,6 @@ mongooseConnect();
 const { errorHandler } = require('./middleware/errorHandler');
 
 // Load routers
-const authRouter = require('./routers/authRouter');
 const userRouter = require('./routers/userRouter');
 
 // Set port
@@ -35,7 +34,6 @@ app.get('/api', (req, res) => {
   });
 });
 
-app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
 
 // Error handler
