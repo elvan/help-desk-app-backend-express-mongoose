@@ -4,6 +4,10 @@ const express = require('express');
 // Load environment variables from .env file
 dotenv.config();
 
+// Connect to MongoDB database
+const mongooseConnect = require('./database/mongooseConnect');
+mongooseConnect();
+
 // Load middleware
 const { errorHandler } = require('./middleware/errorHandler');
 
@@ -16,9 +20,6 @@ const PORT = process.env.PORT || 3000;
 
 // Create Express server
 const app = express();
-
-// Middleware
-app.use(errorHandler);
 
 // Use JSON parser
 app.use(express.json());
@@ -36,6 +37,9 @@ app.get('/api', (req, res) => {
 
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
+
+// Error handler
+app.use(errorHandler);
 
 // Start Express server
 app.listen(3000, () => {
