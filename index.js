@@ -1,11 +1,18 @@
 const dotenv = require('dotenv');
 const express = require('express');
 
+const userRouter = require('./routers/userRouter');
+
 // Load environment variables from .env file
 dotenv.config();
 
+// Set port
+const PORT = process.env.PORT || 3000;
+
 // Create Express server
 const app = express();
+
+app.use(express.json());
 
 // API routes
 app.get('/api', (req, res) => {
@@ -15,7 +22,9 @@ app.get('/api', (req, res) => {
   });
 });
 
+app.use('/api/users', userRouter);
+
 // Start Express server
 app.listen(3000, () => {
-  console.log('Help Desk app listening on port 3000!');
+  console.log(`Help Desk app listening on port ${PORT}!`);
 });
