@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 const express = require('express');
 
+const authRouter = require('./routers/authRouter');
 const userRouter = require('./routers/userRouter');
 
 // Load environment variables from .env file
@@ -22,6 +23,7 @@ app.get('/api', (req, res) => {
   });
 });
 
+app.use('/api/auth/login', authRouter);
 app.use('/api/users', userRouter);
 
 // Start Express server
