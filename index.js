@@ -4,15 +4,17 @@ const express = require('express');
 // Load environment variables from .env file
 dotenv.config();
 
-// Connect to MongoDB database
+// Import MongoDB database connection
 const mongooseConnect = require('./database/mongooseConnect');
-mongooseConnect();
 
 // Load middleware
-const { errorHandler } = require('./middleware/errorHandler');
+const errorHandler = require('./middleware/errorHandler');
 
 // Load routers
 const userRouter = require('./routers/userRouter');
+
+// Connect to MongoDB database
+mongooseConnect();
 
 // Set port
 const PORT = process.env.PORT || 3000;

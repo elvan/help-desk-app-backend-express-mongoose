@@ -1,9 +1,9 @@
-const asyncHandler = require('express-async-handler');
+const expressAsyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 
-const User = require('../models/userModel');
+const User = require('../../models/userModel');
 
-const registerUser = asyncHandler(async (req, res) => {
+const registerUserController = expressAsyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   // Basic validation
@@ -12,9 +12,10 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('Please include all fields');
   }
 
-  // Find if user already exists
+  // Find user by email
   const userExists = await User.findOne({ email });
 
+  // Check if user already exists
   if (userExists) {
     res.status(400);
     throw new Error('User already exists');
@@ -47,32 +48,8 @@ const registerUser = asyncHandler(async (req, res) => {
   } else {
     // If user was not created
     res.status(400);
-
-    // Throw an error
     throw new Error('Invalid user data');
   }
 });
 
-const loginUser = asyncHandler(async (req, res) => {
-  const { email } = req.body;
-
-  res.status(200).json({
-    message: 'Login successful',
-    data: {
-      email,
-    },
-  });
-});
-
-const currentUser = asyncHandler(async (req, res) => {
-  res.status(200).json({
-    message: 'Current user',
-    data: {},
-  });
-});
-
-module.exports = {
-  registerUser,
-  loginUser,
-  currentUser,
-};
+module.exports = registerUserController;
